@@ -26,6 +26,16 @@ brew install watchman
 * How to install a new package. This will also update package.json
 ```
 	npm i <package-name> 
+	or
+	 npm install --save <package-name>
+```
+* Clean up
+```
+	watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf node_modules/ && rm -f package-lock.json && rm -f yarn.lock && npm cache verify && npm install && expo r -c
+```
+* How to log
+```
+onPress={console.log(JSON.stringify(this.props))}
 ```
 
 # Links
