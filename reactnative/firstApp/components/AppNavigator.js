@@ -1,11 +1,13 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import Home from './Home';
-import Friends from './Friends';
+import History from '../screens/History';
+import Home from '../screens/Home';
+import NewRecord from '../screens/NewRecord';
 
 const RootStack = createStackNavigator({
+  	History: { screen: History },
   	Home: { screen: Home },
-	Friends: { screen: Friends }
+	NewRecord: { screen: NewRecord }
   },
   {
     initialRouteName: "Home" //Default screen name
