@@ -10,12 +10,23 @@
 * Scan QR code by camera and open Expo app
 
 ## Using React Native
+https://reactnative.dev/docs/getting-started
+To run with xcode
 * Install node and watchman if not exists already
 ```
 brew install node
 brew install watchman
 ```
-* 
+* Run `npx react-native init <project-name>`
+* Go to directory
+* Run `npx react-native run-ios`. This will run the app on a simulator.
+
+# Uncooked
+
+* How to install a new package. This will also update package.json
+```
+	npm i <package-name> 
+```
 
 # Links
 
