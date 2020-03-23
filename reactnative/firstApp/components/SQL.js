@@ -1,24 +1,25 @@
 import * as SQLite from 'expo-sqlite'
 
-const tableName = "first_app_records";
-const db = SQLite.openDatabase("first_app_records");
+const tableName = "child_records";
+const db = SQLite.openDatabase("child_records");
 
 export default class SQL {
   static InitDatabase() {
     db.transaction(tx => {
       tx.executeSql(
-        `create table if not exists ${tableName} (id integer primary key not null, name text, date text);`
+        `create table if not exists ${tableName} (id integer primary key not null, action text, date text);`
       );
     });
   }
 
-  static AddRecord = text => {
+  static AddRecord = (action, actionTime) => {
     db.transaction(
       tx => {
-		console.log("recording");
-        tx.executeSql(`insert into ${tableName} (name, date) values (?,?)`, [
-          text,
-          new Date().toUTCString()
+		console.log(action);
+		console.log(actionTime);
+        tx.executeSql(`insert into ${tableName} (action, date) values (?,?)`, [
+          action,
+          actionTime
         ]);
       },
       null,
