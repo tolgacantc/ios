@@ -23,7 +23,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+	  "package": "com.tolgacantc.babytracker"
+    },
     "ios": {
+	  "bundleIdentifier": "com.tolgacantc.babytracker",
       "supportsTablet": true
     }
   }
