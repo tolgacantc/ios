@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
-import SQL from "../components/SQL";
 import { Styles } from "../components/commons";
 import {
   Container,

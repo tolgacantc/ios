@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
-import SQL from "../components/SQL";
+import Database from '../components/Database';
 import { Message, Styles } from "../components/commons";
 import {
   Container,
@@ -14,6 +14,8 @@ import {
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+const db = new Database();
+
 export default class History extends React.Component {
   constructor(props) {
     super(props);
@@ -22,8 +24,17 @@ export default class History extends React.Component {
 
   async componentDidMount() {
 	console.log("Did mount");
-    let records = await SQL.GetRecords();
-    this.setState({records, isFetching: false});
+    db.listRecords().then((data) => {
+      this.setState({
+        records: data,
+        isFetching: false,
+      });
+    }).catch((err) => {
+      console.log(err);
+      this.setState = {
+        isFetching: false
+      }
+    })
   }
 
   render() {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import SQL from "../components/SQL";
 import { Styles } from "../components/commons";
 import {
   Container,
@@ -8,6 +7,8 @@ import {
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from 'moment';
+import Database from '../components/Database';
+const db = new Database();
 
 const FORMATS = {
   'datetime': 'YYYY-MM-DD HH:mm',
@@ -69,7 +70,7 @@ export default class NewRecord extends React.Component {
          onPress={() =>  {
 			if (this.state.action) {
 				console.log(this.state.action + " " + this.state.actionTimeStr);
-				SQL.AddRecord(this.state.action, this.state.actionTimeStr);
+				db.addRecord(this.state.action, this.state.actionTimeStr);
 				this.setState({action: "", isDone: 'Recorded', isDatePickerVisible: false});
 				this.props.navigation.navigate('History')
 			}
