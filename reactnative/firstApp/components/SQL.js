@@ -1,7 +1,13 @@
-import * as SQLite from 'expo-sqlite'
+import SQLite from "react-native-sqlite-storage";
 
 const tableName = "child_records";
-const db = SQLite.openDatabase("child_records");
+const db = 
+    SQLite.openDatabase({
+        name: "TestDatabase",
+        location: "default"
+    }).then((db) => {
+        console.log("Database open!");
+    });
 
 export default class SQL {
   static InitDatabase() {
