@@ -38,6 +38,13 @@ brew install watchman
 onPress={console.log(JSON.stringify(this.props))}
 ```
 
+* IDouble conversion issue
+```
+	pod 'DoubleConversion', :podspec => './../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+	Delete the Podfile.lock
+	pod install
+```
+
 # Links
 
 * https://reactnative.dev/docs/tutorial
