@@ -54,6 +54,8 @@ export default class NewRecord extends React.Component {
                 { label: 'Wake up', value: 'WAKE_UP' },
                 { label: 'Breast Feeding Start', value: 'BREAST_FEEDING_START' },
                 { label: 'Breast Feeding End', value: 'BREAST_FEEDING_END' },
+                { label: 'Snack Start', value: 'SNACK_START' },
+                { label: 'Snack End', value: 'SNACK_END' },
             ]}
         />
 	  <Button onPress={showDatePicker} title={this.state.actionTimeStr} />

@@ -55,6 +55,8 @@ export default class NewRecord extends React.Component {
                 { label: 'Wake up', value: 'WAKE_UP' },
                 { label: 'Breast Feeding Start', value: 'BREAST_FEEDING_START' },
                 { label: 'Breast Feeding End', value: 'BREAST_FEEDING_END' },
+                { label: 'Snack Start', value: 'SNACK_START' },
+                { label: 'Snack End', value: 'SNACK_END' },
             ]}
         />
 	  <Button onPress={showDatePicker} title={this.state.actionTimeStr} />
@@ -80,21 +82,24 @@ export default class NewRecord extends React.Component {
 	  </Container>
     );
   }
-}
 
-export const Dropdown = () => {
+  Dropdown = () => {
     return (
         <RNPickerSelect style={Styles.container}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => this.setState({action: value})}
             items={[
                 { label: 'Sleep Start', value: 'SLEEP_START' },
                 { label: 'Sleep End', value: 'SLEEP_END' },
                 { label: 'Breast Feeding Start', value: 'BREAST_FEEDING_START' },
                 { label: 'Breast Feeding End', value: 'BREAST_FEEDING_END' },
+                { label: 'Snack Start', value: 'SNACK_START' },
+                { label: 'Snack End', value: 'SNACK_END' },
             ]}
         />
     );
-};
+  };
+
+}
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {

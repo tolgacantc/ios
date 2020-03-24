@@ -1,4 +1,5 @@
 // https://github.com/didinj/react-native-sqlite-offline/blob/master/Database.js
+// https://www.djamware.com/post/5caec76380aca754f7a9d1f1/react-native-tutorial-sqlite-offline-androidios-mobile-app
 import SQLite from "react-native-sqlite-storage";
 SQLite.DEBUG(true);
 SQLite.enablePromise(true);
@@ -68,19 +69,60 @@ export default class Database {
     }
   };
 
+  updateProduct(id, action, actionDate) {
+    return new Promise((resolve) => {
+      this.initDB().then((db) => {
+        db.transaction((tx) => {
+          tx.executeSql(`UPDATE ${table_name} SET action = ?, date = ? WHERE id = ?`, [action, actionDate, id]).then(([tx, results]) => {
+            resolve(results);
+          });
+        }).then((result) => {
+          this.closeDatabase(db);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    });  
+  }
+
+  recordById(record_id) {
+    return new Promise((resolve) => {
+      const products = [];
+      this.initDB().then((db) => {
+        db.transaction((tx) => {
+          tx.executeSql( `select * from ${table_name} where id = ?`, [record_id]).then(([tx,results]) => {
+            console.log("Query completed");
+            var len = results.rows.length;
+		    if (len > 0) {
+              resolve(results.rows.item[0]);
+			}
+          });
+        }).then((result) => {
+          this.closeDatabase(db);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    });  
+  }
+
+
   listRecords() {
     return new Promise((resolve) => {
       const products = [];
       this.initDB().then((db) => {
         db.transaction((tx) => {
-          tx.executeSql( `select * from ${table_name} order by id DESC`, []).then(([tx,results]) => {
+          tx.executeSql( `select * from ${table_name} order by date  DESC`, []).then(([tx,results]) => {
             console.log("Query completed");
             var len = results.rows.length;
             for (let i = 0; i < len; i++) {
               let row = results.rows.item(i);
               console.log(`Prod ID: ${row.id}, Prod Name: ${row.action}`)
-              const { id, action, date} = row;
-              products.push({id, action, date});
+              products.push(row);
             }
             console.log(products);
             resolve(products);
