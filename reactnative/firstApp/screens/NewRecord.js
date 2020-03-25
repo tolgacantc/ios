@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import SQL from "../components/SQL";
+import DataFetcher from "../components/DataFetcher";
 import { Styles } from "../components/commons";
 import {
   Container,
@@ -71,7 +71,7 @@ export default class NewRecord extends React.Component {
          onPress={() =>  {
 			if (this.state.action) {
 				console.log(this.state.action + " " + this.state.actionTimeStr);
-				SQL.AddRecord(this.state.action, this.state.actionTimeStr);
+				DataFetcher.AddRecord(this.state.action, this.state.actionTimeStr);
 				this.setState({action: "", isDone: 'Recorded', isDatePickerVisible: false});
 				this.props.navigation.navigate('History')
 			}

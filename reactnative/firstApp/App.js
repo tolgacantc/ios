@@ -1,6 +1,6 @@
 import React from 'react';
 import AppNavigator from './components/AppNavigator';
-import SQL from "./components/SQL";
+import DataFetcher from "./components/DataFetcher";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ export default class App extends React.Component {
   }
  
   async componentDidMount() {
-    SQL.InitDatabase();
+    DataFetcher.Init();
   }
 
   render() {

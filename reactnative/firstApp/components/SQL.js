@@ -1,13 +1,13 @@
 import * as SQLite from 'expo-sqlite'
 
-const tableName = "child_records";
-const db = SQLite.openDatabase("child_records");
+const tableName = "records";
+const db = SQLite.openDatabase("babyTracker.db");
 
 export default class SQL {
   static InitDatabase() {
     db.transaction(tx => {
       tx.executeSql(
-        `create table if not exists ${tableName} (id integer primary key not null, action text, date text);`
+        `create table if not exists ${tableName} (id integer primary key not null, action text, date text, desc text);`
       );
     });
   }
@@ -40,5 +40,18 @@ export default class SQL {
       });
     });
   };
+
+  static DeleteRecord = (keyId) => {
+    db.transaction(
+      tx => {
+				console.log("DELETING", keyId);
+        tx.executeSql(`delete from ${tableName} where id=?`, [ keyId ]);
+      },
+      null,
+      null
+    );
+  };
+
+
 }
 
