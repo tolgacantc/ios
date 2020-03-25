@@ -31,7 +31,7 @@ export default class SQL {
     return new Promise((resolve, reject) => {
       db.transaction(async tx => {
         await tx.executeSql(
-          `select * from ${tableName} order by id DESC`,
+          `select * from ${tableName} order by date DESC`,
           null,
           (_, { rows: { _array } }) => {
             resolve(_array);
