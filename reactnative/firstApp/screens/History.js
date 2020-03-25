@@ -27,22 +27,6 @@ export default class History extends React.Component {
   }
 
 
-  _twoOptionAlertHandler=()=>{
-    //function to make two option alert
-    Alert.alert(
-      //title
-      'Hello',
-      //body
-      'I am two option alert. Do you want to cancel me ?',
-      [
-        {text: 'Yes', onPress: () => console.log('Yes Pressed')},
-        {text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel'},
-      ],
-      { cancelable: false }
-      //clicking out side of alert will not cancel
-    );
-  }
-
   render() {
 		const removeFromRecords = (index) => {
 			let records = this.state.records;
@@ -50,14 +34,14 @@ export default class History extends React.Component {
     	this.setState({records});
   	}
 
-	let { records, isFetching } = this.state;
+		let { records, isFetching } = this.state;
 
-	if (isFetching) {
-		return (
-        <View style={Styles.container}>
-		  <ActivityIndicator size="large" color="#0000ff" />
+		if (isFetching) {
+			return (
+      	<View style={Styles.container}>
+		  		<ActivityIndicator size="large" color="#0000ff" />
         </View>
-		);
+			);
     } else if (records === null || records.length === 0) {
       return (
         <Message>
