@@ -19,13 +19,12 @@ export default class NewRecord extends React.Component {
 		this.state = {
 	  	action: '', 
 	  	actionTime: now, 
-      isDone: '', 
       actionTimeStr: nowStr,
       isDatePickerVisible: false};
   } 
 
 	onValueChange = value => {
-    	this.setState({action: value});
+  	this.setState({action: value});
 	}
 
   render() {
@@ -38,16 +37,23 @@ export default class NewRecord extends React.Component {
 			this.setState({isDatePickerVisible: true});
   	};
 
-
   	const handleConfirm = date => {
 			this.setState({actionTime: date, actionTimeStr: Moment(date).format(FORMATS['datetime'])});
 			hideDatePicker();
   	};
 
+		const addButtonAction = () => {
+			if (this.state.action) {
+				console.log(this.state.action + " " + this.state.actionTimeStr);
+				DataFetcher.AddRecord(this.state.action, this.state.actionTimeStr);
+				this.setState({action: "", isDatePickerVisible: false});
+				this.props.navigation.navigate('History')
+			}
+		};
+
     return (
       <Container style={Styles.container}>
         <Text> Add action here! </Text>
-        <Text> {this.state.isDone} </Text>
 
 				<ActionDropDown valueChangeAction={this.onValueChange}/>
 
@@ -61,23 +67,13 @@ export default class NewRecord extends React.Component {
         	onCancel= {hideDatePicker}
       	/>
 
-        <Button 
-        	onPress={() =>  {
-						if (this.state.action) {
-							console.log(this.state.action + " " + this.state.actionTimeStr);
-							DataFetcher.AddRecord(this.state.action, this.state.actionTimeStr);
-							this.setState({action: "", isDone: 'Recorded', isDatePickerVisible: false});
-							this.props.navigation.navigate('History')
-						}
-					} } 
-        	title="Add" 
-				/>
+        <Button onPress={addButtonAction} title="Add" />
 	  	</Container>
     );
   }
 }
 
-export const ActionDropDown = props => {
+const ActionDropDown = props => {
 	return (
 		<RNPickerSelect style={pickerSelectStyles}
 			onValueChange={props.valueChangeAction}
