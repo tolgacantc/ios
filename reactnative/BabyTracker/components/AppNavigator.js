@@ -5,13 +5,13 @@ import Home from '../screens/Home';
 import NewRecord from '../screens/NewRecord';
 
 const RootStack = createStackNavigator({
-  	History: { screen: History },
-  	Home: { screen: Home },
+	History: { screen: History },
+	Home: { screen: Home },
 	NewRecord: { screen: NewRecord }
-  },
-  {
-    initialRouteName: "Home" //Default screen name
-  }
+},
+	{
+		initialRouteName: "Home" //Default screen name
+	}
 );
 
 export default createAppContainer(RootStack);

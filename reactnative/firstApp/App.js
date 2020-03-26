@@ -3,17 +3,17 @@ import AppNavigator from './components/AppNavigator';
 import DataFetcher from "./components/DataFetcher";
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
- 
-  async componentDidMount() {
-    DataFetcher.Init();
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <AppNavigator />
-    );
-  }
+    async componentDidMount() {
+        DataFetcher.Init();
+    }
+
+    render() {
+        return ( <
+            AppNavigator / >
+        );
+    }
 }

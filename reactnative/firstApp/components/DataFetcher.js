@@ -1,19 +1,19 @@
 import SQL from "./SQL";
 
 export default class DataFetcher {
-	static Init() {
-		SQL.InitDatabase();
-	}
-	
-	static AddRecord = (action, actionTime) => {
-		SQL.AddRecord(action, actionTime);
-	}
+    static Init() {
+        SQL.InitDatabase();
+    }
 
-	static DeleteRecord = (keyId) => {
-		SQL.DeleteRecord(keyId);
-	}
+    static AddRecord = (action, actionTime) => {
+        SQL.AddRecord(action, actionTime);
+    }
 
-	static GetRecords = () => {
-		return SQL.GetRecords();
-	}
+    static DeleteRecord = (keyId) => {
+        SQL.DeleteRecord(keyId);
+    }
+
+    static GetRecords = () => {
+        return SQL.GetRecords();
+    }
 }
