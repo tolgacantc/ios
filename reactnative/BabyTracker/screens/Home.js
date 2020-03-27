@@ -14,20 +14,10 @@ export default class Home extends React.Component {
 	render() {
 		return (
 			<Container style={Styles.container}>
-			<Button
-			title="Add New Record"
-			onPress={() =>
-				this.props.navigation.navigate('NewRecord')
-			}
-			/>
-			<Button
-			title="History"
-			onPress={() =>
-				this.props.navigation.navigate('History')
-			}
-			/>
+						<Button title="Add New Record"
+							onPress={() => this.props.navigation.navigate('NewRecord') } />
+						<Button title="History" onPress={() => this.props.navigation.navigate('History') } />
 			</Container>
 		);
 	}
 }
-

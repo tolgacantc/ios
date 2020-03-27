@@ -1,8 +1,20 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import React, {
+	useState
+} from 'react';
+import {
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	Button
+} from 'react-native';
 
-import { Styles } from "../components/commons";
-import { Container, } from "native-base";
+import {
+	Styles
+} from "../components/commons";
+import {
+	Container,
+} from "native-base";
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from 'moment';
@@ -17,30 +29,42 @@ export default class NewRecord extends React.Component {
 	constructor(props) {
 		super(props);
 		let now = new Date();
-		let nowStr = Moment(now).format(FORMATS['datetime']);
+		let nowStr = Moment(now)
+			.format(FORMATS['datetime']);
 		this.state = {
-			action: '', 
-			actionTime: now, 
+			action: '',
+			actionTime: now,
 			actionTimeStr: nowStr,
-			isDatePickerVisible: false};
-	} 
+			isDatePickerVisible: false
+		};
+	}
 
 	onValueChange = value => {
-		this.setState({action: value});
+		this.setState({
+			action: value
+		});
 	}
 
 	render() {
 
 		const hideDatePicker = () => {
-			this.setState({isDatePickerVisible: false});
+			this.setState({
+				isDatePickerVisible: false
+			});
 		};
 
 		const showDatePicker = () => {
-			this.setState({isDatePickerVisible: true});
+			this.setState({
+				isDatePickerVisible: true
+			});
 		};
 
 		const handleConfirm = date => {
-			this.setState({actionTime: date, actionTimeStr: Moment(date).format(FORMATS['datetime'])});
+			this.setState({
+				actionTime: date,
+				actionTimeStr: Moment(date)
+					.format(FORMATS['datetime'])
+			});
 			hideDatePicker();
 		};
 
@@ -48,7 +72,10 @@ export default class NewRecord extends React.Component {
 			if (this.state.action) {
 				console.log(this.state.action + " " + this.state.actionTimeStr);
 				db.addRecord(this.state.action, this.state.actionTimeStr);
-				this.setState({action: "", isDatePickerVisible: false});
+				this.setState({
+					action: "",
+					isDatePickerVisible: false
+				});
 				this.props.navigation.navigate('History')
 			}
 		};
@@ -77,9 +104,8 @@ export default class NewRecord extends React.Component {
 
 const ActionDropDown = props => {
 	return (
-		<RNPickerSelect style={pickerSelectStyles}
-		onValueChange={props.valueChangeAction}
-		items={[
+		<RNPickerSelect style={pickerSelectStyles} onValueChange={props.valueChangeAction}
+	    items={[
 			{ label: 'Sleep', value: 'SLEEP_START' },
 			{ label: 'Wake up', value: 'WAKE_UP' },
 			{ label: 'Breast Feeding Start', value: 'BREAST_FEEDING_START' },
@@ -87,7 +113,7 @@ const ActionDropDown = props => {
 			{ label: 'Snack Start', value: 'SNACK_START' },
 			{ label: 'Snack End', value: 'SNACK_END' },
 		]}
-		/>
+	/>
 	);
 };
 
