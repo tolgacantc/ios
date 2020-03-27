@@ -1,7 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ActivityIndicator, Alert } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	Button,
+	ActivityIndicator,
+	Alert
+}
+from 'react-native';
 import Database from '../components/Database';
-import { Message, Styles } from "../components/commons";
+import {
+	Message,
+	Styles
+}
+from "../components/commons";
 import {
 	Container,
 	List,
@@ -11,30 +23,39 @@ import {
 	Left,
 	Right,
 	Body,
-} from "native-base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+}
+from "native-base";
+import {
+	MaterialCommunityIcons
+}
+from "@expo/vector-icons";
 
 const db = new Database();
 
 export default class History extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { records: [], isFetching: true };
+		this.state = {
+			records: [],
+			isFetching: true
+		};
 	}
 
 	async componentDidMount() {
 		console.log("Did mount");
-		db.listRecords().then((data) => {
-			this.setState({
-				records: data,
-				isFetching: false,
-			});
-		}).catch((err) => {
-			console.log(err);
-			this.setState = {
-				isFetching: false
-			}
-		})
+		db.listRecords()
+			.then((data) => {
+				this.setState({
+					records: data,
+					isFetching: false,
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+				this.setState = {
+					isFetching: false
+				}
+			})
 	}
 
 	render() {
@@ -42,10 +63,15 @@ export default class History extends React.Component {
 		const removeFromRecords = (index) => {
 			let records = this.state.records;
 			records.splice(index, 1);
-			this.setState({records});
+			this.setState({
+				records
+			});
 		}
 
-		let { records, isFetching } = this.state;
+		let {
+			records,
+			isFetching
+		} = this.state;
 
 		if (isFetching) {
 			return (
@@ -62,13 +88,13 @@ export default class History extends React.Component {
 		} else {
 			return (
 				<Container>
-				<Content>
+			<Content>
 				{records.map((record, index) => (
 					<RecordListItem key={record.id} record={record} ind={index} {...this.props}
 					deleteFunc={removeFromRecords}/>
 				))}
-				</Content>
-				</Container>
+			</Content>
+		</Container>
 			);
 		}
 	}
@@ -77,15 +103,20 @@ export default class History extends React.Component {
 export const RecordListItem = props => {
 	const confirmDelete = () => {
 		Alert.alert(
-			'Alert Title',
-			'Alert message here...',
-			[
-				{text: 'NO', onPress: () => {}, style: 'cancel'},
-				{text: 'YES', onPress: () => {
-					props.deleteFunc(props.ind);
-					db.deleteRecord(props.record.id);
-				}},
-			]
+			'Alert Title', 'Alert message here...', [
+				{
+					text: 'NO',
+					onPress: () => {},
+					style: 'cancel'
+                },
+				{
+					text: 'YES',
+					onPress: () => {
+						props.deleteFunc(props.ind);
+						db.deleteRecord(props.record.id);
+					}
+                }
+            ]
 		);
 	}
 
