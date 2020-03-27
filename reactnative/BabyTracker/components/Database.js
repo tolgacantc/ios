@@ -69,61 +69,48 @@ export default class Database {
 		}
 	};
 
+	identityConvert = (results) => {
+		return results;
+	}
+
 	updateProduct(id, action, actionDate) {
-		return new Promise((resolve) => {
-			this.initDB().then((db) => {
-				db.transaction((tx) => {
-					tx.executeSql(`UPDATE ${table_name} SET action = ?, date = ? WHERE id = ?`, [action, actionDate, id]).then(([tx, results]) => {
-						resolve(results);
-					});
-				}).then((result) => {
-					this.closeDatabase(db);
-				}).catch((err) => {
-					console.log(err);
-				});
-			}).catch((err) => {
-				console.log(err);
-			});
-		});  
+		return this._runQuery(`UPDATE ${table_name} SET action = ?, date = ? WHERE id = ?`, [action, actionDate, id], this.identityConvert);
 	}
 
 	recordById(record_id) {
-		return new Promise((resolve) => {
-			const products = [];
-			this.initDB().then((db) => {
-				db.transaction((tx) => {
-					tx.executeSql( `select * from ${table_name} where id = ?`, [record_id]).then(([tx,results]) => {
-						console.log("Query completed");
-						var len = results.rows.length;
-						if (len > 0) {
-							resolve(results.rows.item[0]);
-						}
-					});
-				}).then((result) => {
-					this.closeDatabase(db);
-				}).catch((err) => {
-					console.log(err);
-				});
-			}).catch((err) => {
-				console.log(err);
-			});
-		});  
+		this._runQuery(`select * from ${table_name} where id = ?`, [record_id], this.identityConvert);
 	}
 
-
 	listRecords() {
+		const convert = (results) => {
+				const products = [];
+				var len = results.rows.length;
+				for (let i = 0; i < len; i++) {
+					let row = results.rows.item(i);
+					console.log(`Prod ID: ${row.id}, Prod Name: ${row.action}`)
+					products.push(row);
+				}
+				return products;
+		};
+
+  	return this._runQuery(`select * from ${table_name} order by date  DESC`, [], convert);
+	}
+
+	deleteRecord(keyId) {
+		return this._runQuery(`delete from ${table_name} where id = ?`, [keyId], this.identityConvert);
+	}
+
+	addRecord(action, date) {
+		return this._runQuery(`insert into ${table_name} (action, date) values (?,?)`, [action, date], this.identityConvert);
+	}
+
+	_runQuery(query, params, convertFunc) {
 		return new Promise((resolve) => {
-			const products = [];
 			this.initDB().then((db) => {
 				db.transaction((tx) => {
-					tx.executeSql( `select * from ${table_name} order by date  DESC`, []).then(([tx,results]) => {
+					tx.executeSql(query, params).then(([tx,results]) => {
 						console.log("Query completed");
-						var len = results.rows.length;
-						for (let i = 0; i < len; i++) {
-							let row = results.rows.item(i);
-							console.log(`Prod ID: ${row.id}, Prod Name: ${row.action}`)
-							products.push(row);
-						}
+						var products = convertFunc(results);
 						console.log(products);
 						resolve(products);
 					});
@@ -135,42 +122,6 @@ export default class Database {
 			}).catch((err) => {
 				console.log(err);
 			});
-		});  
-	}
-
-	deleteRecord(keyId) {
-		return new Promise((resolve) => {
-			this.initDB().then((db) => {
-				db.transaction((tx) => {
-					tx.executeSql(`delete from ${table_name} where id = ?`, [keyId]).then(([tx, results]) => {
-						resolve(results);
-					});
-				}).then((result) => {
-					this.closeDatabase(db);
-				}).catch((err) => {
-					console.log(err);
-				});
-			}).catch((err) => {
-				console.log(err);
-			});
-		});  
-	}
-
-	addRecord(action, date) {
-		return new Promise((resolve) => {
-			this.initDB().then((db) => {
-				db.transaction((tx) => {
-					tx.executeSql(`insert into ${table_name} (action, date) values (?,?)`, [action, date]).then(([tx, results]) => {
-						resolve(results);
-					});
-				}).then((result) => {
-					this.closeDatabase(db);
-				}).catch((err) => {
-					console.log(err);
-				});
-			}).catch((err) => {
-				console.log(err);
-			});
-		});  
+		});	
 	}
 }
