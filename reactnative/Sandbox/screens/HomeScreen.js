@@ -53,7 +53,7 @@ export default function HomeScreen() {
 }
 
 HomeScreen.navigationOptions = {
-  header: null,
+  header: "TAM BURA",
 };
 
 function DevelopmentModeNotice() {
