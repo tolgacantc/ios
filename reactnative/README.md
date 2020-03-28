@@ -6,7 +6,7 @@
 ## Using expo client
 * Run `npm install -g expo-cli`
 * Run `expo init <project-name>`
-* Run `npm start`. This will open web browser with an QR code (code also avaliable at command line)
+* Run `npm start` or `yarn start`. This will open web browser with an QR code (code also avaliable at command line)
 * Scan QR code by camera and open Expo app
 
 ## Using React Native
