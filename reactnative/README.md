@@ -21,6 +21,13 @@ brew install watchman
 * Go to directory
 * Run `npx react-native run-ios`. This will run the app on a simulator.
 
+or
+```
+react-native init <project-name>
+cd <project-name>
+react-native <run-ios|run-android>
+```
+
 # Uncooked
 
 * How to install a new package. This will also update package.json
