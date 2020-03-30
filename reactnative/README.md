@@ -6,7 +6,7 @@
 ## Using expo client
 * Run `npm install -g expo-cli`
 * Run `expo init <project-name>`
-* Run `npm start`. This will open web browser with an QR code (code also avaliable at command line)
+* Run `npm start` or `yarn start`. This will open web browser with an QR code (code also avaliable at command line)
 * Scan QR code by camera and open Expo app
 
 ## Using React Native
@@ -20,6 +20,13 @@ brew install watchman
 * Run `npx react-native init <project-name>`
 * Go to directory
 * Run `npx react-native run-ios`. This will run the app on a simulator.
+
+or
+```
+react-native init <project-name>
+cd <project-name>
+react-native <run-ios|run-android>
+```
 
 # Uncooked
 
