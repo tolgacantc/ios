@@ -20,7 +20,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Get Started',
+          title: 'Record',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
@@ -48,10 +48,10 @@ export default function BottomTabNavigator({ navigation, route }) {
 
 function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
+	console.warn("THERE:", route);
   switch (routeName) {
     case 'Home':
-      return 'How to get started';
+      return 'Record';
     case 'Links':
       return 'Links to learn more';
     case 'Graph':
