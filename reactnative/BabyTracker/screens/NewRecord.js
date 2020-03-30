@@ -25,81 +25,50 @@ const FORMATS = {
 	'datetime': 'YYYY-MM-DD HH:mm',
 };
 
-export default class NewRecord extends React.Component {
-	constructor(props) {
-		super(props);
-		let now = new Date();
-		let nowStr = Moment(now)
-			.format(FORMATS['datetime']);
-		this.state = {
-			action: '',
-			actionTime: now,
-			actionTimeStr: nowStr,
-			isDatePickerVisible: false
-		};
-	}
+export default function NewRecord ({navigation}) {
+	let now = new Date();
+	let nowStr = Moment(now).format(FORMATS['datetime']);
 
-	onValueChange = value => {
-		this.setState({
-			action: value
-		});
-	}
+	const [action, setAction] = useState("");
+	const [actionTime, setActionTime] = useState(now);
+	const [actionTimeStr, setActionTimeStr] = useState(nowStr);
+	const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
-	render() {
+	const handleConfirm = date => {
+		setActionTime(date);
+		setActionTimeStr(Moment(date).format(FORMATS['datetime']));
+		setIsDatePickerVisible(false);
+	};
 
-		const hideDatePicker = () => {
-			this.setState({
-				isDatePickerVisible: false
-			});
-		};
+	const addButtonAction = () => {
+		if (action) {
+			console.log(action + " " + actionTimeStr);
+			db.addRecord(action, actionTimeStr);
+			setAction("");
+			setIsDatePickerVisible(false);
+			navigation.navigate('History')
+		}
+	};
 
-		const showDatePicker = () => {
-			this.setState({
-				isDatePickerVisible: true
-			});
-		};
-
-		const handleConfirm = date => {
-			this.setState({
-				actionTime: date,
-				actionTimeStr: Moment(date)
-					.format(FORMATS['datetime'])
-			});
-			hideDatePicker();
-		};
-
-		const addButtonAction = () => {
-			if (this.state.action) {
-				console.log(this.state.action + " " + this.state.actionTimeStr);
-				db.addRecord(this.state.action, this.state.actionTimeStr);
-				this.setState({
-					action: "",
-					isDatePickerVisible: false
-				});
-				this.props.navigation.navigate('History')
-			}
-		};
-
-		return (
-			<Container style={Styles.container}>
+	return (
+		<Container style={Styles.container}>
 			<Text> Add action here! </Text>
 
-			<ActionDropDown valueChangeAction={this.onValueChange}/>
+			<ActionDropDown valueChangeAction={(date) => setAction(date)}/>
 
-			<Button onPress={showDatePicker} title={this.state.actionTimeStr} />
+			<Button onPress={() => setIsDatePickerVisible(false)} title={actionTimeStr} />
 
 			<DateTimePickerModal
-			isVisible={this.state.isDatePickerVisible}
-			mode="datetime"
-			date={this.state.actionTime}
-			onConfirm= {handleConfirm}
-			onCancel= {hideDatePicker}
+				isVisible={isDatePickerVisible}
+				mode="datetime"
+				date={actionTime}
+				onConfirm= {handleConfirm}
+				onCancel= {() => setIsDatePickerVisible(false)}
 			/>
 
 			<Button onPress={addButtonAction} title="Add"/>
-			</Container>
-		);
-	}
+		</Container>
+	);
 }
 
 const ActionDropDown = props => {
