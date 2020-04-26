@@ -4,6 +4,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import GraphScreen from '../screens/GraphScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -25,18 +26,18 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Welcome"
+        component={WelcomeScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Welcome',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
       <BottomTab.Screen
         name="Graph"
         component={GraphScreen}
         options={{
-          title: 'Graph',
+          title: 'Stats',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-stats" />,
         }}
       />
@@ -48,13 +49,12 @@ export default function BottomTabNavigator({ navigation, route }) {
 
 function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-	console.warn("THERE:", route);
   switch (routeName) {
     case 'Home':
       return 'Record';
     case 'Links':
       return 'Links to learn more';
     case 'Graph':
-      return 'Graph';
+      return 'Statistics';
   }
 }
